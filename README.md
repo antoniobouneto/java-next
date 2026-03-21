@@ -42,6 +42,7 @@ cd frontend
 npm install
 npm run dev
 🛠️ Roadmap / Próximos Passos
+
 [ ] Integração com AWS S3 para persistência definitiva.
 
 [ ] Implementação de autenticação via Keycloak ou Spring Security.
