@@ -25,8 +25,7 @@ import com.itextpdf.layout.properties.TextAlignment;
 
 @RestController
 @RequestMapping("/api/pdf")
-// Lembre-se de ajustar o IP se necessário, ou use "*" para testes locais
-@CrossOrigin(origins = {"http://localhost:3000", "http://26.209.64.221:3000"})
+@CrossOrigin(origins = "*")
 public class PdfController {
     
     private static final Logger logger = LoggerFactory.getLogger(PdfController.class);
