@@ -5,12 +5,13 @@ frontend/out/
 frontend/.env*
 
 # Java / Spring Boot / Maven
-backend/target/
-backend/.mvn/
-backend/mvnw
-backend/mvnw.cmd
+java-next/demo/target/
+java-next/demo/.mvn/wrapper/
+java-next/demo/mvnw
+java-next/demo/mvnw.cmd
 
-# IDEs / OS
+# IDEs / OS / Docker local
 .vscode/
 .idea/
 *.DS_Store
+.docker/
