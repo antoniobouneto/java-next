@@ -19,8 +19,6 @@ Backend: Java 21, Spring Boot 3, Spring Cloud Stream.
 
 Mensageria: RabbitMQ (AMQP).
 
-Banco de Dados: PostgreSQL.
-
 Infra: Docker & Docker Compose.
 
 🚀 Executando o projeto
