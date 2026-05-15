@@ -1,4 +1,4 @@
-package com.javanext.demo.controller;
+package app.controller;
 
 import java.io.ByteArrayOutputStream;
 

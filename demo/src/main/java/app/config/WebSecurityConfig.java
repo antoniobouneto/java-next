@@ -1,4 +1,4 @@
-package com.javanext.demo.config;
+package app.config;
 
 import java.util.Arrays;
 
@@ -31,7 +31,13 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("https://ample-beauty-production-4dfb.up.railway.app"));
+        
+        String frontendUrl = System.getenv("FRONTEND_URL");
+        if (frontendUrl == null) {
+            frontendUrl = "http://localhost:3000";
+        }
+        
+        configuration.setAllowedOriginPatterns(Arrays.asList("https://ample-beauty-production-4dfb.up.railway.app", "http://localhost:3000", frontendUrl));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
