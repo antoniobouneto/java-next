@@ -16,12 +16,20 @@ export default function GeminiConverter() {
     }
   }, [text]);
 
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
   const handlePaste = (event: React.ClipboardEvent) => {
     const items = event.clipboardData.items;
     for (let i = 0; i < items.length; i++) {
       if (items[i].type.indexOf("image") !== -1) {
         const blob = items[i].getAsFile();
-        if (blob) setImages((prev) => [...prev, blob]);
+        if (blob) {
+          if (blob.size > MAX_FILE_SIZE) {
+            alert(`Imagem muito grande: ${(blob.size / 1024 / 1024).toFixed(2)}MB. O limite é 5MB.`);
+            continue;
+          }
+          setImages((prev) => [...prev, blob]);
+        }
       }
     }
   };

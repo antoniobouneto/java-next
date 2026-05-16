@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/pdf/convert";
+const API_URL = "/api/pdf";
 export async function convertImagesToPdf(images: File[], text: string): Promise<void> {
   if (images.length === 0) {
     throw new Error("Nenhuma imagem fornecida");

@@ -31,9 +31,9 @@ public class PdfController {
     private static final Logger logger = LoggerFactory.getLogger(PdfController.class);
 
     @PostMapping("/convert")
-    public ResponseEntity<byte[]> convertToPdf(
+    public ResponseEntity<?> convertToPdf(
             @RequestParam("images") MultipartFile[] images,
-            @RequestParam("title") String title) {
+            @RequestParam(value = "title", required = false) String title) {
         
         logger.info("Recebido request para converter {} imagens com título: {}", images.length, title);
         
@@ -54,6 +54,12 @@ public class PdfController {
 
             // 2. Adiciona as imagens centralizadas
             for (MultipartFile file : images) {
+                String contentType = file.getContentType();
+                if (contentType == null || !contentType.startsWith("image/")) {
+                    logger.warn("Arquivo inválido rejeitado. ContentType: {}", contentType);
+                    return ResponseEntity.badRequest().body("Erro: Apenas imagens são permitidas.");
+                }
+
                 Image img = new Image(ImageDataFactory.create(file.getBytes()));
                 
                 img.setMaxWidth(pdf.getDefaultPageSize().getWidth() - 100);
@@ -74,7 +80,7 @@ public class PdfController {
                     
         } catch (Exception e) {
             logger.error("Erro ao gerar PDF", e);
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.internalServerError().body("Erro interno ao processar as imagens.");
         }
     }
 }
