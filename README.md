@@ -15,12 +15,11 @@ São dois serviços:
 
 ```mermaid
 flowchart LR
-    U[Usuário no navegador] --> FE[Frontend Next.js<br/>page.tsx + pdfService.ts]
-    FE -->|POST /api/pdf<br/>multipart: title + images[]| API[API Route Next.js<br/>app/api/pdf/route.ts]
-    API -->|POST /api/pdf/convert<br/>header X-API-KEY| BE[Backend Spring Boot<br/>PdfController]
-    BE -->|PDF em memória<br/>ByteArrayOutputStream| BE
-    BE -->|200 OK<br/>application/pdf| API
-    API -->|200 OK<br/>application/pdf| FE
+    U["Usuário no navegador"] --> FE["Frontend Next.js - page.tsx + pdfService.ts"]
+    FE -->|POST /api/pdf - multipart title + images| API["API Route Next.js - route.ts"]
+    API -->|POST /api/pdf/convert - header X-API-KEY| BE["Backend Spring Boot - PdfController"]
+    BE -->|200 OK - application/pdf| API
+    API -->|200 OK - application/pdf| FE
     FE -->|download no navegador| U
 ```
 
@@ -30,19 +29,19 @@ flowchart LR
 
 ```mermaid
 sequenceDiagram
-    actor Usuário
-    participant Page as page.tsx<br/>(GeminiConverter)
+    actor Usuario
+    participant Page as page.tsx GeminiConverter
     participant Service as pdfService.ts
-    participant Route as route.ts<br/>(API Route Next.js)
+    participant Route as route.ts API Route
     participant Filter as ApiKeyAuthFilter
     participant Controller as PdfController
     participant iText as iText 7
 
-    Usuário->>Page: Cola imagens (Ctrl+V) + digita título
-    Page->>Page: handlePaste() valida tipo image/* e ≤ 5 MB
-    Usuário->>Page: Clica em enviar
-    Page->>Service: handleSend() → convertImagesToPdf(images, text)
-    Service->>Service: Monta FormData (title + images[])
+    Usuario->>Page: Cola imagens (Ctrl+V) + digita título
+    Page->>Page: handlePaste() valida tipo image e tamanho max 5 MB
+    Usuario->>Page: Clica em enviar
+    Page->>Service: handleSend() chama convertImagesToPdf(images, text)
+    Service->>Service: Monta FormData (title + images)
     Service->>Route: POST /api/pdf (multipart)
     Route->>Route: Lê BACKEND_URL e API_KEY do ambiente
     Route->>Filter: POST /api/pdf/convert + header X-API-KEY
